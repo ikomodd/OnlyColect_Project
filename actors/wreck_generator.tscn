@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://djm882b3dly4p"]
+
+[ext_resource type="Script" uid="uid://cllr5gsx3fk70" path="res://scripts/body_scripts/WreckGenerator.cs" id="1_77blb"]
+[ext_resource type="Shader" uid="uid://byyvadyk2epas" path="res://assets/shaders/conveyor_shader.gdshader" id="2_efj1a"]
+[ext_resource type="Texture2D" uid="uid://bcdxp88hauar3" path="res://assets/sprites/Conveyor_conveyor.png" id="3_sh2yp"]
+[ext_resource type="Texture2D" uid="uid://v0c2do332ybh" path="res://assets/sprites/Conveyor_body.png" id="4_lg5my"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pygsu"]
+resource_local_to_scene = true
+shader = ExtResource("2_efj1a")
+shader_parameter/u_enabled = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ewtt"]
+size = Vector2(128, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5dnje"]
+size = Vector2(128, 48)
+
+[node name="WreckGenerator" type="StaticBody2D"]
+collision_layer = 4
+script = ExtResource("1_77blb")
+
+[node name="ConveyorSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_pygsu")
+position = Vector2(0, 32)
+texture = ExtResource("3_sh2yp")
+hframes = 2
+
+[node name="BaseSprite" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(0, 32)
+texture = ExtResource("4_lg5my")
+hframes = 2
+region_rect = Rect2(0, 48, 16, 16)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_6ewtt")
+
+[node name="ConveyorArea" type="Area2D" parent="."]
+visible = false
+position = Vector2(48, 24)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorArea"]
+position = Vector2(-48, 0)
+shape = SubResource("RectangleShape2D_5dnje")
+debug_color = Color(0, 0.643959, 0.290242, 0.42)

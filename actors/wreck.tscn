@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm1wnqb2461vu"]
+
+[ext_resource type="Script" uid="uid://bw5yples5i6pl" path="res://scripts/body_scripts/Wreck.cs" id="1_dgooh"]
+[ext_resource type="Texture2D" uid="uid://27wfpu2dsg0p" path="res://assets/sprites/Wrecks.png" id="2_76vp1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5s71i"]
+size = Vector2(16, 16)
+
+[node name="Wreck" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_dgooh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_5s71i")
+debug_color = Color(0.711769, 0.485038, 0, 0.42)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_76vp1")
+hframes = 16
+vframes = 16

@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://niouxy35i65g"]
+
+[ext_resource type="Shader" uid="uid://c5fbb58q3e4kc" path="res://assets/shaders/status_bar.gdshader" id="1_esnbg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vovy"]
+resource_local_to_scene = true
+shader = ExtResource("1_esnbg")
+shader_parameter/u_frontBarColor = Vector4(1, 0, 0, 1)
+shader_parameter/u_backgroundColor = Vector4(0, 0, 0, 1)
+shader_parameter/u_damageType = 1
+shader_parameter/u_frontBarStatus = 0.5
+shader_parameter/u_backBarStatus = 0.75
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esnbg"]
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="UserInterface" type="CanvasLayer"]
+
+[node name="StatusContainer" type="VBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -64.0
+offset_right = 128.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme_override_constants/separation = 4
+alignment = 2
+
+[node name="HealthBar" type="Panel" parent="StatusContainer"]
+material = SubResource("ShaderMaterial_0vovy")
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_esnbg")

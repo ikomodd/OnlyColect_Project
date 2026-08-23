@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://bk08w5ma5wsdv"]
+
+[ext_resource type="Script" uid="uid://bc1vcr13j3j07" path="res://scripts/body_scripts/Furnace.cs" id="1_itqm6"]
+[ext_resource type="Texture2D" uid="uid://wkqx84tcp2po" path="res://assets/sprites/Furnace3_mounth.png" id="2_jta5n"]
+[ext_resource type="Shader" uid="uid://smc6bnm8hrgr" path="res://assets/shaders/bar.gdshader" id="3_5v0ch"]
+[ext_resource type="Texture2D" uid="uid://ci2d00xbjk3pg" path="res://assets/sprites/Furnace3_body.png" id="3_tbqx7"]
+[ext_resource type="Shader" uid="uid://bknbwyr3yplac" path="res://assets/shaders/hot.gdshader" id="5_5v0ch"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5v0ch"]
+bg_color = Color(0.800004, 0.524505, 5.77569e-07, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5v0ch"]
+shader = ExtResource("5_5v0ch")
+shader_parameter/u_size = 1.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_tbqx7"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jta5n"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(24, 8, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(1, 1, 0)
+spread = 180.0
+initial_velocity_min = 16.0
+initial_velocity_max = 16.0
+gravity = Vector3(0, 0, 0)
+scale_min = 24.0
+scale_max = 24.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jta5n"]
+resource_local_to_scene = true
+shader = ExtResource("3_5v0ch")
+shader_parameter/u_progress = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h8315"]
+bg_color = Color(4.42803e-06, 0.705509, 0.256654, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k62ys"]
+size = Vector2(80, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1miri"]
+size = Vector2(64, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5v0ch"]
+radius = 24.0
+height = 96.0
+
+[node name="Furnace" type="StaticBody2D"]
+script = ExtResource("1_itqm6")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 8.0
+offset_bottom = 52.0
+scale = Vector2(1.60881, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_5v0ch")
+
+[node name="MounthSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_jta5n")
+
+[node name="BodySprite" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = ExtResource("3_tbqx7")
+
+[node name="ParticleEmiter" type="GPUParticles2D" parent="."]
+z_index = 1
+material = SubResource("ShaderMaterial_5v0ch")
+position = Vector2(0, 48)
+emitting = false
+amount = 64
+texture = SubResource("CanvasTexture_tbqx7")
+collision_base_size = 0.0
+process_material = SubResource("ParticleProcessMaterial_jta5n")
+
+[node name="fuelBar" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_jta5n")
+offset_left = -56.0
+offset_top = -32.0
+offset_right = 56.0
+offset_bottom = -24.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_h8315")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 36)
+shape = SubResource("RectangleShape2D_k62ys")
+
+[node name="MounthArea" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, 56)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MounthArea"]
+shape = SubResource("RectangleShape2D_1miri")
+debug_color = Color(3.08037e-06, 0.635205, 0.419987, 0.42)
+
+[node name="DamageArea" type="Area2D" parent="."]
+position = Vector2(0, 56)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_5v0ch")
+debug_color = Color(1, 0, 0, 0.419608)
