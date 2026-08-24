@@ -7,7 +7,7 @@ public partial class PlayerStatus : Node {
 
 	//
 
-	private const float REGENERATION = 10.0f;
+	private const float REGENERATION = 5.0f;
 	private const float REGENERATION_DELAY = 5.0f;
 	private ulong prevRegenerationTick = 0;
 

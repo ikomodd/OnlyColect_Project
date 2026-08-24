@@ -6,13 +6,17 @@ public partial class PlayerCharacter : CharacterBody2D {
 	private Sprite2D characterSprite = null;
 	private AnimationPlayer animator = null;
 	private Node2D wreckFolder = null;
+	private Node2D interactableFolder = null;
 
 	//
 
-	private const float SPEED = 7000f;
+	private const float SPEED = 7000.0f;
 	private const float DRAG = 0.7f;
-	private const float INTERACT_RANGE = 64f;
-	private const float DROP_FORCE = 600f;
+
+	private const float INTERACT_RANGE = 64.0f;
+	private const float GET_WRECK_RANGE = 64.0f;
+
+	private const float DROP_FORCE = 600.0f;
 
 	//
 
@@ -26,6 +30,28 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 	private void Interact() {
 
+		float minRangeSquared = INTERACT_RANGE * INTERACT_RANGE;
+
+		Node2D nearestInteractable = null;
+		float minDistanceSquared = float.MaxValue;
+
+		foreach (Node2D node in interactableFolder.GetChildren()) {
+
+			float distanceSquared = (Position - node.Position).LengthSquared();
+
+			if (distanceSquared < minRangeSquared && distanceSquared < minDistanceSquared) {
+
+				minDistanceSquared = distanceSquared;
+				nearestInteractable = node;
+			}
+		}
+
+		if (nearestInteractable is PassageWay passageWay)
+			passageWay.Enter();
+	}
+
+	private void GetWreck() {
+
 		// If has a object in hands, drop her
 
 		if (OnHands != null) {
@@ -35,7 +61,7 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 		// Collect data
 
-		float interactRangeSquared = INTERACT_RANGE * INTERACT_RANGE;
+		float interactRangeSquared = GET_WRECK_RANGE * GET_WRECK_RANGE;
 
 		float minDistanceSquared = float.MaxValue;
 		Node2D nearestWreck = null;
@@ -96,7 +122,9 @@ public partial class PlayerCharacter : CharacterBody2D {
 	public override void _Input(InputEvent @event) {
 		base._Input(@event);
 
-		if (@event.IsActionPressed("interact"))
+		if (@event.IsActionPressed("get_wreck"))
+			GetWreck();
+		else if (@event.IsActionPressed("interact"))
 			Interact();
 	}
 
@@ -107,7 +135,9 @@ public partial class PlayerCharacter : CharacterBody2D {
 		animator = GetNode<AnimationPlayer>("Animator");
 
 		handlePosition = GetNode<Node2D>("Handle").Position;
+
 		wreckFolder = GetTree().CurrentScene.GetNode<Node2D>("Wrecks");
+		interactableFolder = GetTree().CurrentScene.GetNode<Node2D>("Interactables");
 	}
 
 	public override void _PhysicsProcess(double delta) {

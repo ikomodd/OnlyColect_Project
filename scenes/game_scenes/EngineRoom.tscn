@@ -1,14 +1,17 @@
-[gd_scene load_steps=9 format=4 uid="uid://c4n5200tq82i3"]
+[gd_scene load_steps=12 format=4 uid="uid://c4n5200tq82i3"]
 
-[ext_resource type="Texture2D" uid="uid://c7kjekntepnee" path="res://assets/sprites/CA_Tilemap.png" id="1_1miri"]
-[ext_resource type="PackedScene" uid="uid://c5ttfu25fydqe" path="res://actors/player_character.tscn" id="2_1miri"]
-[ext_resource type="PackedScene" uid="uid://dm1wnqb2461vu" path="res://actors/wreck.tscn" id="2_k62ys"]
-[ext_resource type="PackedScene" uid="uid://bk08w5ma5wsdv" path="res://actors/furnace.tscn" id="3_k62ys"]
-[ext_resource type="PackedScene" uid="uid://djm882b3dly4p" path="res://actors/wreck_generator.tscn" id="5_1miri"]
-[ext_resource type="PackedScene" uid="uid://niouxy35i65g" path="res://ui_actors/user_interface.tscn" id="6_6ewtt"]
+[ext_resource type="Texture2D" uid="uid://c7kjekntepnee" path="res://assets/sprites/CA_Tilemap.png" id="1_4dmti"]
+[ext_resource type="PackedScene" uid="uid://dm1wnqb2461vu" path="res://actors/wreck.tscn" id="2_scmvi"]
+[ext_resource type="PackedScene" uid="uid://bk08w5ma5wsdv" path="res://actors/furnace.tscn" id="3_58jwt"]
+[ext_resource type="PackedScene" uid="uid://cbf6hqh2gsysn" path="res://scenes/game_scenes/JailRoom.tscn" id="4_scmvi"]
+[ext_resource type="PackedScene" uid="uid://djm882b3dly4p" path="res://actors/wreck_generator.tscn" id="4_vhlgh"]
+[ext_resource type="PackedScene" uid="uid://c5ttfu25fydqe" path="res://actors/player_character.tscn" id="5_8f3s5"]
+[ext_resource type="PackedScene" uid="uid://niouxy35i65g" path="res://scenes/game_interfaces/user_interface.tscn" id="6_u31dc"]
+[ext_resource type="Script" uid="uid://ymn503ro32sm" path="res://scripts/body_scripts/PassageWay.cs" id="7_4um25"]
+[ext_resource type="Texture2D" uid="uid://daiksrxd4ig1x" path="res://assets/sprites/CA_door.png" id="8_wdl2e"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6ewtt"]
-texture = ExtResource("1_1miri")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_blxgl"]
+texture = ExtResource("1_4dmti")
 1:1/0 = 0
 2:1/0 = 0
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, -8)
@@ -128,7 +131,7 @@ texture = ExtResource("1_1miri")
 [sub_resource type="TileSet" id="TileSet_5dnje"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 3
-sources/0 = SubResource("TileSetAtlasSource_6ewtt")
+sources/0 = SubResource("TileSetAtlasSource_blxgl")
 
 [node name="TestScene" type="Node2D"]
 y_sort_enabled = true
@@ -141,29 +144,41 @@ tile_set = SubResource("TileSet_5dnje")
 [node name="Wrecks" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Wreck" parent="Wrecks" instance=ExtResource("2_k62ys")]
+[node name="Wreck" parent="Wrecks" instance=ExtResource("2_scmvi")]
 position = Vector2(320, 64)
+
+[node name="Interactables" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Door" type="Node2D" parent="Interactables"]
+position = Vector2(240, -272)
+script = ExtResource("7_4um25")
+SceneDestiny = ExtResource("4_scmvi")
+
+[node name="Sprite" type="Sprite2D" parent="Interactables/Door"]
+position = Vector2(0, -16)
+texture = ExtResource("8_wdl2e")
 
 [node name="Engines" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Furnace1" parent="Engines" instance=ExtResource("3_k62ys")]
+[node name="Furnace1" parent="Engines" instance=ExtResource("3_58jwt")]
 position = Vector2(120, -184)
 
-[node name="Furnace2" parent="Engines" instance=ExtResource("3_k62ys")]
+[node name="Furnace2" parent="Engines" instance=ExtResource("3_58jwt")]
 position = Vector2(-8, -184)
 
-[node name="Furnace3" parent="Engines" instance=ExtResource("3_k62ys")]
+[node name="Furnace3" parent="Engines" instance=ExtResource("3_58jwt")]
 position = Vector2(-136, -184)
 
-[node name="WreckGeneratorRight" parent="Engines" instance=ExtResource("5_1miri")]
+[node name="WreckGeneratorRight" parent="Engines" instance=ExtResource("4_vhlgh")]
 position = Vector2(336, 64)
 
-[node name="WreckGeneratorLeft" parent="Engines" instance=ExtResource("5_1miri")]
+[node name="WreckGeneratorLeft" parent="Engines" instance=ExtResource("4_vhlgh")]
 position = Vector2(-352, 64)
 conveyorDirection = 1.0
 enabled = false
 
-[node name="PlayerCharacter" parent="." instance=ExtResource("2_1miri")]
+[node name="PlayerCharacter" parent="." instance=ExtResource("5_8f3s5")]
 
-[node name="UserInterface" parent="." instance=ExtResource("6_6ewtt")]
+[node name="UserInterface" parent="." instance=ExtResource("6_u31dc")]
