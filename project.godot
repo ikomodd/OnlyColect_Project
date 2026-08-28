@@ -17,7 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+UserInterface="*res://scenes/game_interfaces/user_interface.tscn"
 PlayerStatus="*res://scripts/singletons/PlayerStatus.cs"
+GameState="*res://scripts/singletons/GameState.cs"
 
 [display]
 

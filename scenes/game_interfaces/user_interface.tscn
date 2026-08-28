@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://niouxy35i65g"]
+[gd_scene load_steps=6 format=3 uid="uid://niouxy35i65g"]
 
+[ext_resource type="Script" uid="uid://dtkccsi4xqukr" path="res://scripts/singletons/UserInterface.cs" id="1_3v3hi"]
 [ext_resource type="Shader" uid="uid://c5fbb58q3e4kc" path="res://assets/shaders/status_bar.gdshader" id="1_esnbg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vovy"]
@@ -11,13 +12,17 @@ shader_parameter/u_damageType = 1
 shader_parameter/u_frontBarStatus = 0.5
 shader_parameter/u_backBarStatus = 0.75
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esnbg"]
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5nyjo"]
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 64
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v3hi"]
+bg_color = Color(0, 0, 0, 0.00392157)
 
 [node name="UserInterface" type="CanvasLayer"]
+script = ExtResource("1_3v3hi")
 
 [node name="StatusContainer" type="VBoxContainer" parent="."]
 anchors_preset = 2
@@ -35,4 +40,12 @@ alignment = 2
 material = SubResource("ShaderMaterial_0vovy")
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_esnbg")
+theme_override_styles/panel = SubResource("StyleBoxFlat_5nyjo")
+
+[node name="Curtain" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3v3hi")

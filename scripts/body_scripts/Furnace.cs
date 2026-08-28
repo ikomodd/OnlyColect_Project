@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public partial class Furnace : StaticBody2D {
@@ -105,8 +106,32 @@ public partial class Furnace : StaticBody2D {
 	public override void _Ready() {
 		base._Ready();
 
+		// Save
+
+		var StateManager = GetNode<GameState>("/root/GameState");
+
+		if (StateManager.HasData("furnace_" + Name)) {
+
+			var furnaceData = StateManager.GetData<Dictionary>("furnace_" + Name);
+
+			var currentTick = Time.GetTicksMsec();
+			var exitTick = furnaceData["exit_tick"].As<ulong>();
+
+			var delta = currentTick - exitTick;
+
+			double cycles = delta / ((double)BURN_DELAY * 1000.0);
+			double fuelLost = cycles * (double)FUEL_CONSUMPTION;
+
+			GD.Print(delta, " ", cycles);
+
+			fuelCount = furnaceData["fuel"].As<float>() - (float)fuelLost;
+			mounthOpened = furnaceData["opened"].AsBool();
+		}
+
+		//
+
 		particleEmiter = GetNode<GpuParticles2D>("ParticleEmiter");
-		particleEmiter.Emitting = true;
+		particleEmiter.Emitting = mounthOpened;
 
 		fuelBar = GetNode<Panel>("fuelBar");
 
@@ -119,6 +144,21 @@ public partial class Furnace : StaticBody2D {
 		mounthArea.BodyEntered += MounthEntered;
 
 		damageArea = GetNode<Area2D>("DamageArea");
+	}
+
+	public override void _ExitTree() {
+		base._ExitTree();
+
+		var StateManager = GetNode<GameState>("/root/GameState");
+
+		var furnaceData = new Dictionary<string, Variant> {
+
+			{"exit_tick", Time.GetTicksMsec()},
+			{"opened", mounthOpened},
+			{"fuel", fuelCount}
+		};
+
+		StateManager.SetData("furnace_" + Name, furnaceData);
 	}
 
 	public override void _Process(double delta) {

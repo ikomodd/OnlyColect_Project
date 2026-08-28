@@ -49,7 +49,9 @@ public partial class PlayerStatus : Node {
 	public override void _Ready() {
 		base._Ready();
 
-		healthBarShader = (ShaderMaterial)GetTree().CurrentScene.GetNode<Panel>("UserInterface/StatusContainer/HealthBar").Material;
+		var userInterface = GetNode<UserInterface>("/root/UserInterface");
+
+		healthBarShader = (ShaderMaterial)userInterface.GetNode<Panel>("StatusContainer/HealthBar").Material;
 	}
 
 	public override void _Process(double delta) {

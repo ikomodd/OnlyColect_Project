@@ -30,6 +30,9 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 	private void Interact() {
 
+		if (interactableFolder == null)
+			return;
+
 		float minRangeSquared = INTERACT_RANGE * INTERACT_RANGE;
 
 		Node2D nearestInteractable = null;
@@ -46,7 +49,7 @@ public partial class PlayerCharacter : CharacterBody2D {
 			}
 		}
 
-		if (nearestInteractable is PassageWay passageWay)
+		if (nearestInteractable is PointWay passageWay)
 			passageWay.Enter();
 	}
 
@@ -58,6 +61,9 @@ public partial class PlayerCharacter : CharacterBody2D {
 			Drop();
 			return;
 		}
+
+		if (wreckFolder == null)
+			return;
 
 		// Collect data
 
@@ -131,13 +137,33 @@ public partial class PlayerCharacter : CharacterBody2D {
 	public override void _Ready() {
 		base._Ready();
 
+		var stateManager = GetNode<GameState>("/root/GameState");
+
+		if (stateManager.HasData("player_target_instance_name")) {
+
+			var targetName = stateManager.GetData<string>("player_target_instance_name");
+			var targetPos = stateManager.GetData<Vector2>("player_target_position");
+
+			var targetInstance = GetTree().CurrentScene.GetNode<Node2D>("Interactables/" + targetName);
+
+			Position = targetPos + targetInstance.Position;
+
+		}
+
+		//
+
 		characterSprite = GetNode<Sprite2D>("CharacterSprite");
 		animator = GetNode<AnimationPlayer>("Animator");
 
 		handlePosition = GetNode<Node2D>("Handle").Position;
 
-		wreckFolder = GetTree().CurrentScene.GetNode<Node2D>("Wrecks");
-		interactableFolder = GetTree().CurrentScene.GetNode<Node2D>("Interactables");
+		var currentScene = GetTree().CurrentScene;
+
+		if (currentScene.HasNode("Wrecks"))
+			wreckFolder = currentScene.GetNode<Node2D>("Wrecks");
+
+		if (currentScene.HasNode("Interactables"))
+			interactableFolder = currentScene.GetNode<Node2D>("Interactables");
 	}
 
 	public override void _PhysicsProcess(double delta) {
