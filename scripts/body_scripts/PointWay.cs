@@ -32,7 +32,6 @@ public partial class PointWay : Node2D {
 		var playerCharacter = GetTree().CurrentScene.GetNode<PlayerCharacter>("PlayerCharacter");
 		var playerTargetPosition = Position - playerCharacter.Position;
 
-		stateManager.SetData("player_target_position", playerTargetPosition);
 		stateManager.SetData("player_target_instance_name", PlayerTargetName);
 
 		GetNode<UserInterface>("/root/UserInterface").ChangeCurtain(false, CurtainAction);

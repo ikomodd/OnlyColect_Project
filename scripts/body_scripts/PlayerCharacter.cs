@@ -142,12 +142,9 @@ public partial class PlayerCharacter : CharacterBody2D {
 		if (stateManager.HasData("player_target_instance_name")) {
 
 			var targetName = stateManager.GetData<string>("player_target_instance_name");
-			var targetPos = stateManager.GetData<Vector2>("player_target_position");
-
 			var targetInstance = GetTree().CurrentScene.GetNode<Node2D>("Interactables/" + targetName);
 
-			Position = targetPos + targetInstance.Position;
-
+			Position = targetInstance.Position;
 		}
 
 		//

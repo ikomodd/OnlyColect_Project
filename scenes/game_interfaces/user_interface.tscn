@@ -1,14 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://niouxy35i65g"]
+[gd_scene load_steps=9 format=3 uid="uid://niouxy35i65g"]
 
 [ext_resource type="Script" uid="uid://dtkccsi4xqukr" path="res://scripts/singletons/UserInterface.cs" id="1_3v3hi"]
 [ext_resource type="Shader" uid="uid://c5fbb58q3e4kc" path="res://assets/shaders/status_bar.gdshader" id="1_esnbg"]
+[ext_resource type="Script" uid="uid://dsxx06d4u6a78" path="res://scripts/ui_scripts/StatusBar.cs" id="3_5nyjo"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vovy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v3hi"]
+bg_color = Color(0, 0, 0, 0.00392157)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3v3hi"]
 resource_local_to_scene = true
 shader = ExtResource("1_esnbg")
-shader_parameter/u_frontBarColor = Vector4(1, 0, 0, 1)
+shader_parameter/u_frontBarColor = Vector4(0, 1, 0, 1)
+shader_parameter/u_backBarColor = Vector4(0.2, 0.5, 0, 1)
 shader_parameter/u_backgroundColor = Vector4(0, 0, 0, 1)
-shader_parameter/u_damageType = 1
 shader_parameter/u_frontBarStatus = 0.5
 shader_parameter/u_backBarStatus = 0.75
 
@@ -18,29 +22,26 @@ corner_radius_top_right = 64
 corner_radius_bottom_right = 64
 corner_radius_bottom_left = 64
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v3hi"]
-bg_color = Color(0, 0, 0, 0.00392157)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nyjo"]
+resource_local_to_scene = true
+shader = ExtResource("1_esnbg")
+shader_parameter/u_frontBarColor = Vector4(0, 0.57, 0.9, 1)
+shader_parameter/u_backBarColor = Vector4(0, 0.4, 0.5, 1)
+shader_parameter/u_backgroundColor = Vector4(0, 0, 0, 1)
+shader_parameter/u_frontBarStatus = 0.5
+shader_parameter/u_backBarStatus = 0.75
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vovy"]
+resource_local_to_scene = true
+shader = ExtResource("1_esnbg")
+shader_parameter/u_frontBarColor = Vector4(1, 0, 0, 1)
+shader_parameter/u_backBarColor = Vector4(0.5, 0, 0, 1)
+shader_parameter/u_backgroundColor = Vector4(0, 0, 0, 1)
+shader_parameter/u_frontBarStatus = 0.5
+shader_parameter/u_backBarStatus = 0.75
 
 [node name="UserInterface" type="CanvasLayer"]
 script = ExtResource("1_3v3hi")
-
-[node name="StatusContainer" type="VBoxContainer" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -64.0
-offset_right = 128.0
-offset_bottom = -16.0
-grow_vertical = 0
-theme_override_constants/separation = 4
-alignment = 2
-
-[node name="HealthBar" type="Panel" parent="StatusContainer"]
-material = SubResource("ShaderMaterial_0vovy")
-custom_minimum_size = Vector2(0, 8)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5nyjo")
 
 [node name="Curtain" type="Panel" parent="."]
 anchors_preset = 15
@@ -49,3 +50,83 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3v3hi")
+
+[node name="StatusContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -64.0
+offset_right = 128.0
+offset_bottom = -16.0
+grow_vertical = 0
+
+[node name="HungerBar" type="Panel" parent="StatusContainer"]
+material = SubResource("ShaderMaterial_3v3hi")
+layout_mode = 2
+offset_top = 32.0
+offset_right = 55.0
+offset_bottom = 36.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5nyjo")
+script = ExtResource("3_5nyjo")
+
+[node name="StaminaBar" type="Panel" parent="StatusContainer"]
+material = SubResource("ShaderMaterial_5nyjo")
+layout_mode = 2
+offset_left = 57.0
+offset_top = 32.0
+offset_right = 112.0
+offset_bottom = 36.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5nyjo")
+script = ExtResource("3_5nyjo")
+
+[node name="HealthBar" type="Panel" parent="StatusContainer"]
+material = SubResource("ShaderMaterial_0vovy")
+layout_mode = 2
+offset_top = 40.0
+offset_right = 112.0
+offset_bottom = 48.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5nyjo")
+script = ExtResource("3_5nyjo")
+
+[node name="ClockContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -127.0
+offset_bottom = 64.0
+grow_horizontal = 0
+
+[node name="ClockLabel" type="RichTextLabel" parent="ClockContainer"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -127.0
+offset_top = 16.0
+offset_right = -15.0
+offset_bottom = 32.0
+grow_horizontal = 0
+theme_override_font_sizes/normal_font_size = 12
+text = "XX:XX XX"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CoinsLabel" type="RichTextLabel" parent="ClockContainer"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -79.0
+offset_top = 32.0
+offset_right = -15.0
+offset_bottom = 48.0
+grow_horizontal = 0
+theme_override_font_sizes/normal_font_size = 12
+text = "10"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1

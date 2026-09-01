@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c5ttfu25fydqe" path="res://actors/player_character.tscn" id="5_8f3s5"]
 [ext_resource type="Script" uid="uid://ymn503ro32sm" path="res://scripts/body_scripts/PointWay.cs" id="7_4um25"]
 
-[node name="TestScene" type="Node2D"]
+[node name="Engine" type="Node2D"]
 y_sort_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -24,10 +24,10 @@ position = Vector2(320, 64)
 [node name="Interactables" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="ToJail" type="Node2D" parent="Interactables"]
+[node name="ToCanteen" type="Node2D" parent="Interactables"]
 position = Vector2(240, -272)
 script = ExtResource("7_4um25")
-DestinyPath = "res://scenes/game_scenes/JailRoom.tscn"
+DestinyPath = "res://scenes/game_scenes/CanteenRoom.tscn"
 PlayerTargetName = "ToEngine"
 
 [node name="Engines" type="Node2D" parent="."]
