@@ -1,23 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://cbf6hqh2gsysn"]
+[gd_scene load_steps=6 format=4 uid="uid://cbf6hqh2gsysn"]
 
 [ext_resource type="TileSet" uid="uid://bujfttm1tk6pb" path="res://resources/binary_files/ScenaryTileset.tres" id="1_gx4qe"]
 [ext_resource type="PackedScene" uid="uid://c5ttfu25fydqe" path="res://actors/player_character.tscn" id="2_n3fi0"]
-[ext_resource type="Script" uid="uid://cxt1bsxfxorve" path="res://scripts/body_scripts/AreaWay.cs" id="3_1ki78"]
 [ext_resource type="Script" uid="uid://ymn503ro32sm" path="res://scripts/body_scripts/PointWay.cs" id="4_xsleb"]
 [ext_resource type="Script" uid="uid://cl5comqjs83ki" path="res://scripts/body_scripts/Canteen.cs" id="5_tt0a4"]
-
-[sub_resource type="Gradient" id="Gradient_15q2y"]
-offsets = PackedFloat32Array(0, 0.65625, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
-metadata/_snap_enabled = true
-metadata/_snap_count = 64
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ux2my"]
-gradient = SubResource("Gradient_15q2y")
-width = 64
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ux2my"]
-size = Vector2(65, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wwxcm"]
 size = Vector2(160, 32)
@@ -31,24 +17,6 @@ tile_set = ExtResource("1_gx4qe")
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("2_n3fi0")]
 position = Vector2(0, -80)
-
-[node name="AreaWay" type="Area2D" parent="."]
-position = Vector2(528, 0)
-script = ExtResource("3_1ki78")
-DestinyPath = "res://scenes/game_scenes/EngineRoom.tscn"
-
-[node name="TextureRect" type="TextureRect" parent="AreaWay"]
-offset_left = -48.0
-offset_top = 74.0
-offset_right = 144.0
-offset_bottom = 170.0
-rotation = -1.5708
-texture = SubResource("GradientTexture1D_ux2my")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaWay"]
-position = Vector2(0, 10)
-shape = SubResource("RectangleShape2D_ux2my")
-debug_color = Color(6.257e-07, 0.643194, 0.304447, 0.42)
 
 [node name="Interactables" type="Node2D" parent="."]
 y_sort_enabled = true

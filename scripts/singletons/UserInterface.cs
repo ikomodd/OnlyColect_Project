@@ -7,26 +7,29 @@ public partial class UserInterface : CanvasLayer {
 	private Panel courtaine = null;
 
 	public delegate void CurtainAction();
+	public event CurtainAction OnCurtainClosed;
 
 	//
 
-	public void ChangeCurtain(bool state, CurtainAction action) {
+	public void CloseCurtain() {
 		
 		byte alpha = 255;
-
-		if (state == true)
-			alpha = 1;
-
-		GD.Print("Rodando");
 
 		var curtainTween = CreateTween();
 		curtainTween.TweenProperty(courtaine, "modulate:a", alpha, 0.5f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.InOut);
 
 		curtainTween.Finished += () => {
 
-			if (!(action is null))
-				action();
+			OnCurtainClosed?.Invoke();
 		};
+	}
+
+	public void OpenCurtain() {
+
+		byte alpha = 0;
+
+		var curtainTween = CreateTween();
+		curtainTween.TweenProperty(courtaine, "modulate:a", alpha, 0.5f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.InOut);
 	}
 
 	//

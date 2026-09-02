@@ -18,6 +18,10 @@ public partial class GameTime : Node {
 
 	public void Sleep() {
 
+		var userInterface = GetNode<UserInterface>("/root/UserInterface");
+
+		//userInterface.CloseCurtain
+
 		var status = GetNode<PlayerStatus>("/root/PlayerStatus");
 		status.Eat(1000);
 

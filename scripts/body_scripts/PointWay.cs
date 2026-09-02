@@ -11,11 +11,12 @@ public partial class PointWay : Node2D {
 
 	//
 
-	private void CurtainAction() {
+	private void CurtainClosed() {
 
-		GD.Print("action");
+		var userInterface = GetNode<UserInterface>("/root/UserInterface");
 
-		GetNode<UserInterface>("/root/UserInterface").ChangeCurtain(true, null);
+		userInterface.OnCurtainClosed -= CurtainClosed;
+		userInterface.OpenCurtain();
 
 		var sceneDestiny = GD.Load<PackedScene>(DestinyPath);
 
@@ -27,6 +28,7 @@ public partial class PointWay : Node2D {
 
 	public void Enter() {
 
+		var userInterface = GetNode<UserInterface>("/root/UserInterface");
 		var stateManager = GetNode<GameState>("/root/GameState");
 
 		var playerCharacter = GetTree().CurrentScene.GetNode<PlayerCharacter>("PlayerCharacter");
@@ -34,6 +36,7 @@ public partial class PointWay : Node2D {
 
 		stateManager.SetData("player_target_instance_name", PlayerTargetName);
 
-		GetNode<UserInterface>("/root/UserInterface").ChangeCurtain(false, CurtainAction);
+		userInterface.OnCurtainClosed += CurtainClosed;
+		userInterface.CloseCurtain();
 	}
 }
