@@ -6,18 +6,11 @@ public partial class PlayerStatus : Node {
 	// Refs
 
 	private StatusBar hungerBar = null;
-	private StatusBar energyBar = null;
 	private StatusBar healthBar = null;
 
 	// Coins
 
 	public uint Coins { get; private set; } = 0;
-
-	//  Energia
-
-	private const float MAX_ENERGY = 100.0f;
-
-	public float Energy { get; private set; } = 100.0f;
 
 	// Fome
 
@@ -26,22 +19,28 @@ public partial class PlayerStatus : Node {
 	private const float HUNGER_DAMAGE = 5.0f;
 	private const ulong HUNGER_DELAY = 5000;
 
-	private ulong prevHungerTick = 0;
-
-	public float Hunger { get; private set; } = 100.0f;
+	public float Hunger { get; private set; } = MAX_HUNGER;
 
 	// Regeneração da vida
 
 	private const float REGENERATION = 5.0f;
 	private const ulong REGENERATION_DELAY = 5000;
-	private ulong prevRegenerationTick = 0;
 
 	// Vida
 
 	private const float MAX_HEALTH = 100.0f;
-	public float Health { get; private set; } = 100.0f;
+	public float Health { get; private set; } = MAX_HEALTH;
 
 	//
+
+	public void Action() {
+
+		Hunger -= HUNGER_COMSUMPTION;
+		Hunger = Mathf.Clamp(Hunger, 0, MAX_HUNGER);
+
+		if (Hunger <= 0)
+			TakeDamage(HUNGER_DAMAGE);
+	}
 
 	public void Eat(float food_count) {
 
@@ -82,25 +81,23 @@ public partial class PlayerStatus : Node {
 
 		// Health
 
-		if (Health < MAX_HEALTH && Hunger > MAX_HUNGER / 2.0f && currentTick - prevRegenerationTick > REGENERATION_DELAY) {
+		if (Health < MAX_HEALTH && Hunger > MAX_HUNGER / 2.0f && currentTick - healthBar.LossTick > REGENERATION_DELAY) {
 
 			Health += REGENERATION;
-			prevRegenerationTick = currentTick;
 			healthBar.LossTick = currentTick;
 		}
 
 		// Hunger
 
-		if (currentTick - prevHungerTick > HUNGER_DELAY) {
+		//if (currentTick - hungerBar.LossTick > HUNGER_DELAY) {
 
-			if (Hunger > 0)
-				Hunger -= HUNGER_COMSUMPTION;
-			else
-				TakeDamage(HUNGER_DAMAGE);
+		//	if (Hunger > 0)
+		//		Hunger -= HUNGER_COMSUMPTION;
+		//	else
+		//		TakeDamage(HUNGER_DAMAGE);
 
-			prevHungerTick = currentTick;
-			hungerBar.LossTick = currentTick;
-		}
+		//	hungerBar.LossTick = currentTick;
+		//}
 
 		hungerBar.Update(Hunger / MAX_HUNGER, currentTick);
 		healthBar.Update(Health / MAX_HEALTH, currentTick);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://niouxy35i65g"]
+[gd_scene load_steps=8 format=3 uid="uid://niouxy35i65g"]
 
 [ext_resource type="Script" uid="uid://dtkccsi4xqukr" path="res://scripts/singletons/UserInterface.cs" id="1_3v3hi"]
 [ext_resource type="Shader" uid="uid://c5fbb58q3e4kc" path="res://assets/shaders/status_bar.gdshader" id="1_esnbg"]
@@ -21,15 +21,6 @@ corner_radius_top_left = 64
 corner_radius_top_right = 64
 corner_radius_bottom_right = 64
 corner_radius_bottom_left = 64
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nyjo"]
-resource_local_to_scene = true
-shader = ExtResource("1_esnbg")
-shader_parameter/u_frontBarColor = Vector4(0, 0.57, 0.9, 1)
-shader_parameter/u_backBarColor = Vector4(0, 0.4, 0.5, 1)
-shader_parameter/u_backgroundColor = Vector4(0, 0, 0, 1)
-shader_parameter/u_frontBarStatus = 0.5
-shader_parameter/u_backBarStatus = 0.75
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vovy"]
 resource_local_to_scene = true
@@ -67,16 +58,6 @@ material = SubResource("ShaderMaterial_3v3hi")
 layout_mode = 2
 offset_top = 32.0
 offset_right = 55.0
-offset_bottom = 36.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_5nyjo")
-script = ExtResource("3_5nyjo")
-
-[node name="StaminaBar" type="Panel" parent="StatusContainer"]
-material = SubResource("ShaderMaterial_5nyjo")
-layout_mode = 2
-offset_left = 57.0
-offset_top = 32.0
-offset_right = 112.0
 offset_bottom = 36.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_5nyjo")
 script = ExtResource("3_5nyjo")

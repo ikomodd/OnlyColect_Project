@@ -16,6 +16,16 @@ public partial class GameTime : Node {
 
 	//
 
+	public void Sleep() {
+
+		var status = GetNode<PlayerStatus>("/root/PlayerStatus");
+		status.Eat(1000);
+
+		Hours = 6;
+		Minutes = 30;
+		Day++;
+	}
+
 	private void UpdateClock(ulong current_tick) {
 
 		if (current_tick - prevSecondTick > MINUTE_TICKS) {

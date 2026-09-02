@@ -3,6 +3,7 @@ using System;
 
 public partial class PlayerCharacter : CharacterBody2D {
 
+	private PlayerStatus status = null;
 	private Sprite2D characterSprite = null;
 	private AnimationPlayer animator = null;
 	private Node2D wreckFolder = null;
@@ -92,6 +93,8 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 		OnHands = wreckInstance;
 		wreckInstance.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
+
+		status.Action();
 	}
 
 	private void Drop() {
@@ -103,6 +106,8 @@ public partial class PlayerCharacter : CharacterBody2D {
 		OnHands.Eject(dropDirecrtion);
 
 		OnHands = null;
+
+		status.Action();
 	}
 
 	private static Vector2 GetDirections() {
@@ -136,6 +141,8 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 	public override void _Ready() {
 		base._Ready();
+
+		status = GetNode<PlayerStatus>("/root/PlayerStatus");
 
 		var stateManager = GetNode<GameState>("/root/GameState");
 
@@ -175,6 +182,9 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 		if (direction != Vector2.Zero)
 			prevDirection = direction;
+
+		//var acellDelta = status.Hunger / 25.0f;
+		//acellDelta = Mathf.Clamp(acellDelta, 0.5f, 1.0f);
 
 		Vector2 acelleration = (direction * SPEED * (float)delta);
 

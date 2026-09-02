@@ -13,12 +13,12 @@ void vertex() {
 }
 
 void fragment() {
-	
-	
-	
+
+
+
 	float yDistance = abs(0.5f - UV.y);
 	vec4 yColor = vec4(0.0f, 0.0f, 0.0f, yDistance);
-	
+
 	if (UV.x > u_backBarStatus && UV.x < u_frontBarStatus)
 		COLOR = vec4(0.0f, 1.0f, 0.0f, 1.0f) - yColor;
 	else if (UV.x < u_frontBarStatus)
