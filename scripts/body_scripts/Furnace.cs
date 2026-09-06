@@ -122,8 +122,6 @@ public partial class Furnace : StaticBody2D {
 			double cycles = delta / ((double)BURN_DELAY * 1000.0);
 			double fuelLost = cycles * (double)FUEL_CONSUMPTION;
 
-			GD.Print(delta, " ", cycles);
-
 			fuelCount = furnaceData["fuel"].As<float>() - (float)fuelLost;
 			mounthOpened = furnaceData["opened"].AsBool();
 		}

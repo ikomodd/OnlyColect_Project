@@ -18,8 +18,7 @@ tile_set = ExtResource("1_gx4qe")
 [node name="PlayerCharacter" parent="." instance=ExtResource("2_n3fi0")]
 position = Vector2(0, -80)
 
-[node name="Interactables" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="Interactables" type="Node" parent="."]
 
 [node name="ToEngine" type="Node2D" parent="Interactables"]
 position = Vector2(0, 48)
@@ -41,3 +40,17 @@ script = ExtResource("5_tt0a4")
 position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_wwxcm")
 debug_color = Color(2.55093e-06, 0.644868, 0.272181, 0.42)
+
+[node name="Slots" type="Node" parent="Canteen"]
+
+[node name="ItemSlot1" type="Node2D" parent="Canteen/Slots"]
+position = Vector2(144, -416)
+metadata/slot_id = 1
+
+[node name="ItemSlot2" type="Node2D" parent="Canteen/Slots"]
+position = Vector2(192, -416)
+metadata/slot_id = 2
+
+[node name="ItemSlot3" type="Node2D" parent="Canteen/Slots"]
+position = Vector2(240, -416)
+metadata/slot_id = 3

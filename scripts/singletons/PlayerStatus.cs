@@ -10,7 +10,7 @@ public partial class PlayerStatus : Node {
 
 	// Coins
 
-	public uint Coins { get; private set; } = 0;
+	public uint Coins { get; set; } = 60;
 
 	// Fome
 

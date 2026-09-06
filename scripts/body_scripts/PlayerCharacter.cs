@@ -7,7 +7,7 @@ public partial class PlayerCharacter : CharacterBody2D {
 	private Sprite2D characterSprite = null;
 	private AnimationPlayer animator = null;
 	private Node2D wreckFolder = null;
-	private Node2D interactableFolder = null;
+	private Node interactableFolder = null;
 
 	//
 
@@ -167,7 +167,7 @@ public partial class PlayerCharacter : CharacterBody2D {
 			wreckFolder = currentScene.GetNode<Node2D>("Wrecks");
 
 		if (currentScene.HasNode("Interactables"))
-			interactableFolder = currentScene.GetNode<Node2D>("Interactables");
+			interactableFolder = currentScene.GetNode<Node>("Interactables");
 	}
 
 	public override void _PhysicsProcess(double delta) {

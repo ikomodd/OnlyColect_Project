@@ -25,7 +25,7 @@ public partial class Wreck : CharacterBody2D {
 
 		// Open file
 		
-		var file = FileAccess.Open("res://resources/json_data/wrecks.json", FileAccess.ModeFlags.Read);
+		var file = FileAccess.Open("res://resources/json_data/Wrecks.json", FileAccess.ModeFlags.Read);
 		var source = file.GetAsText();
 
 		// Parse to GodotArray and get a random element

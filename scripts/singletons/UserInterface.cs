@@ -7,7 +7,7 @@ public partial class UserInterface : CanvasLayer {
 	private Panel courtaine = null;
 
 	public delegate void CurtainAction();
-	public event CurtainAction OnCurtainClosed;
+	public CurtainAction OnCurtainClosed;
 
 	//
 

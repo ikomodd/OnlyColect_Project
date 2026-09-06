@@ -1,0 +1,16 @@
+{
+	"common": [
+
+		{"type": "FOOD", "id": "raw_potato", "price": 6, "satiety": 16}
+	],
+
+	"rare": [
+
+		{"type": "FOOD", "id": "cocked_beef", "price": 28, "satiety": 64}
+	],
+
+	"legendary": [
+
+		{"type": "FOOD", "id": "cake", "price": 40, "satiety": 128}
+	]
+}

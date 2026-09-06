@@ -6,7 +6,6 @@ public partial class Bed : Area2D {
 	void Sleep() {
 
 		var gameTime = GetNode<GameTime>("/root/GameTime");
-
 		gameTime.Sleep();
 	}
 

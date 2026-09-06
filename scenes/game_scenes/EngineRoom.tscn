@@ -21,8 +21,7 @@ y_sort_enabled = true
 [node name="Wreck" parent="Wrecks" instance=ExtResource("2_scmvi")]
 position = Vector2(320, 64)
 
-[node name="Interactables" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="Interactables" type="Node" parent="."]
 
 [node name="ToCanteen" type="Node2D" parent="Interactables"]
 position = Vector2(240, -272)

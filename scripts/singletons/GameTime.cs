@@ -6,7 +6,10 @@ public partial class GameTime : Node {
 	private RichTextLabel clockLabel = null;
 
 	//
-	
+
+	private const byte MAX_SLEEP_TIME = 3;
+	private const byte SLEEP_TIME = 0;
+
 	private const ulong MINUTE_TICKS = 1000;
 	private ulong prevSecondTick = 0; 
 
@@ -19,15 +22,22 @@ public partial class GameTime : Node {
 	public void Sleep() {
 
 		var userInterface = GetNode<UserInterface>("/root/UserInterface");
-
-		//userInterface.CloseCurtain
-
 		var status = GetNode<PlayerStatus>("/root/PlayerStatus");
-		status.Eat(1000);
 
-		Hours = 6;
-		Minutes = 30;
-		Day++;
+		userInterface.OnCurtainClosed = () => {
+
+			if (Hours > 6)
+				status.Eat(1000);
+
+			Hours = 6;
+			Minutes = 30;
+			Day++;
+
+			userInterface.OnCurtainClosed = null;
+			userInterface.OpenCurtain();
+		};
+
+		userInterface.CloseCurtain();
 	}
 
 	private void UpdateClock(ulong current_tick) {
@@ -74,5 +84,8 @@ public partial class GameTime : Node {
 		var currentTick = Time.GetTicksMsec();
 
 		UpdateClock(currentTick);
+
+		if (Hours >= 3 && Hours < 6)
+			Sleep();
 	}
 }
