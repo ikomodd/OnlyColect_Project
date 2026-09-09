@@ -94,7 +94,7 @@ public partial class PlayerCharacter : CharacterBody2D {
 		OnHands = wreckInstance;
 		wreckInstance.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
 
-		status.Action();
+		status.Hunger -= 2.0f;
 	}
 
 	private void Drop() {
@@ -107,7 +107,7 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 		OnHands = null;
 
-		status.Action();
+		status.Hunger -= 2.0f;
 	}
 
 	private static Vector2 GetDirections() {

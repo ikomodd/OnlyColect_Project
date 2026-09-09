@@ -62,7 +62,7 @@ public partial class Furnace : StaticBody2D {
 				if (body is PlayerCharacter) {
 
 					var playerStatus = GetNode<PlayerStatus>("/root/PlayerStatus");
-					playerStatus.TakeDamage(1.0f);
+					playerStatus.Health -= 1.0f;
 				}
 			}
 		}

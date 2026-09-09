@@ -27,7 +27,7 @@ public partial class GameTime : Node {
 		userInterface.OnCurtainClosed = () => {
 
 			if (Hours > 6)
-				status.Eat(1000);
+				status.Hunger = 1000;
 
 			Hours = 6;
 			Minutes = 30;

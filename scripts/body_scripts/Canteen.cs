@@ -66,8 +66,8 @@ public partial class Canteen : Area2D {
 			GD.Print("Esse item já foi comprado");
 			return;
 		}
-
-		var itemPrice = itemData["price"].AsUInt32();
+		
+		var itemPrice = itemData["price"].AsInt32();
 		if (status.Coins < itemPrice) {
 
 			GD.Print("Voce não tem dinheiro pra isso");
@@ -78,7 +78,7 @@ public partial class Canteen : Area2D {
 
 		status.Coins -= itemPrice;
 		itemData["buyed"] = true;
-		status.Eat(satiety);
+		status.Hunger += satiety;
 	}
 
 	//
