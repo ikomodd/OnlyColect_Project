@@ -8,9 +8,9 @@ void vertex() {
 
 void fragment() {
 	
-	if (u_enabled) {
+	if (u_enabled && UV.y / TEXTURE_PIXEL_SIZE.y < 48.0f) {
 		
-		float motion = fract(TIME) / (16.0f);
+		float motion = fract(TIME) / 4.0f;
 		vec2 newUV = UV + vec2(motion, 0.0f);
 		
 		COLOR = texture(TEXTURE, newUV);

@@ -46,6 +46,7 @@ position = Vector2(336, 64)
 
 [node name="WreckGeneratorLeft" parent="Engines" instance=ExtResource("4_vhlgh")]
 position = Vector2(-352, 64)
+scale = Vector2(-1, 1)
 conveyorDirection = 1.0
 enabled = false
 

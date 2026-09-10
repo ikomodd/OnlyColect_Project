@@ -40,13 +40,6 @@ public partial class WreckGenerator : StaticBody2D {
 	public override void _Ready() {
 		base._Ready();
 
-		if (conveyorDirection == 1f) {
-
-			GetNode<Sprite2D>("ConveyorSprite").RotationDegrees = 180f;
-			GetNode<Sprite2D>("ConveyorSprite").Position += new Vector2(0, -16f);
-
-		}
-
 		conveyorShader = (ShaderMaterial)GetNode<Sprite2D>("ConveyorSprite").Material;
 
 		conveyorArea = GetNode<Area2D>("ConveyorArea");

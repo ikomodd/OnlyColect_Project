@@ -56,7 +56,7 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 	private void GetWreck() {
 
-		// If has a object in hands, drop her
+		// Se há um objeto em mãos, drope ele
 
 		if (OnHands != null) {
 			Drop();
@@ -66,16 +66,16 @@ public partial class PlayerCharacter : CharacterBody2D {
 		if (wreckFolder == null)
 			return;
 
-		// Collect data
+		// Coleta a data
 
 		float interactRangeSquared = GET_WRECK_RANGE * GET_WRECK_RANGE;
 
 		float minDistanceSquared = float.MaxValue;
-		Node2D nearestWreck = null;
+		Wreck nearestWreck = null;
 
-		// Get the nearest Node2D Wreck
+		// Pega o objeto mais proximo
 
-		foreach (Node2D wreck in wreckFolder.GetChildren()) {
+		foreach (Wreck wreck in wreckFolder.GetChildren()) {
 
 			float wreckDistanceSquared = (wreck.Position - Position).LengthSquared();
 
@@ -89,21 +89,25 @@ public partial class PlayerCharacter : CharacterBody2D {
 		if (nearestWreck == null)
 			return;
 
-		Wreck wreckInstance = nearestWreck as Wreck;
+		OnHands = nearestWreck;
+		nearestWreck.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
 
-		OnHands = wreckInstance;
-		wreckInstance.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
+		nearestWreck.Reparent(this);
+		nearestWreck.Position = handlePosition;
+		nearestWreck.Velocity = Vector2.Zero;
 
 		status.Hunger -= 2.0f;
 	}
 
 	private void Drop() {
 
-		OnHands.Position = Position + prevDirection * 16f;
 		OnHands.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
 
 		Vector2 dropDirecrtion = Velocity + prevDirection * DROP_FORCE;
 		OnHands.Eject(dropDirecrtion);
+
+		OnHands.Reparent(wreckFolder);
+		OnHands.Position = Position + prevDirection * 16f;
 
 		OnHands = null;
 
@@ -183,9 +187,6 @@ public partial class PlayerCharacter : CharacterBody2D {
 		if (direction != Vector2.Zero)
 			prevDirection = direction;
 
-		//var acellDelta = status.Hunger / 25.0f;
-		//acellDelta = Mathf.Clamp(acellDelta, 0.5f, 1.0f);
-
 		Vector2 acelleration = (direction * SPEED * (float)delta);
 
 		Velocity += acelleration;
@@ -195,9 +196,9 @@ public partial class PlayerCharacter : CharacterBody2D {
 
 		//
 
-		if (OnHands != null) {
-			OnHands.Position = Position + handlePosition;
-		}
+		//if (OnHands != null) {
+		//	OnHands.Position = Position + handlePosition;
+		//}
 
 		//
 

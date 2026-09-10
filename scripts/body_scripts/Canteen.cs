@@ -18,7 +18,7 @@ public partial class Canteen : Area2D {
 
 		dailyMenu.Clear();
 
-		foreach (var slot in itemSlots.GetChildren()) {
+		foreach (Sprite2D slot in itemSlots.GetChildren()) {
 
 			var randomRarity = GD.RandRange(0, 100);
 			Godot.Collections.Array rarityTarget = null;
@@ -44,15 +44,17 @@ public partial class Canteen : Area2D {
 		var status = GetNode<PlayerStatus>("/root/PlayerStatus");
 
 		byte slotNumber = 0;
+		Sprite2D nearestSlot = null;
 		var minDistanceSquared = float.MaxValue;
 
-		foreach (Node2D slot in itemSlots.GetChildren()) {
+		foreach (Sprite2D slot in itemSlots.GetChildren()) {
 
 			var distanceSquared = (slot.GlobalPosition - player_character.GlobalPosition).LengthSquared();
 
 			if (distanceSquared < minDistanceSquared) {
 
 				slotNumber = ((byte)slot.GetMeta("slot_id"));
+				nearestSlot = slot;
 				minDistanceSquared = distanceSquared;
 			}
 		}
@@ -79,6 +81,8 @@ public partial class Canteen : Area2D {
 		status.Coins -= itemPrice;
 		itemData["buyed"] = true;
 		status.Hunger += satiety;
+
+		nearestSlot.Frame = 0;
 	}
 
 	//
@@ -115,6 +119,23 @@ public partial class Canteen : Area2D {
 		}
 		else
 			ChangeMenu();
+
+		foreach (Sprite2D slot in itemSlots.GetChildren()) {
+
+			var slotId = slot.GetMeta("slot_id").AsInt32();
+			var itemData = dailyMenu[slotId - 1].AsGodotDictionary();
+
+			var buyed = itemData["buyed"].AsBool();
+
+
+			if (buyed)
+				slot.Frame = 0;
+			else {
+
+				var frame = itemData["frame"].AsInt32();
+				slot.Frame = frame;
+			}
+		}
 	}
 
 	public override void _ExitTree() {

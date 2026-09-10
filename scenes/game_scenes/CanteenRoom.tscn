@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=4 uid="uid://cbf6hqh2gsysn"]
+[gd_scene load_steps=7 format=4 uid="uid://cbf6hqh2gsysn"]
 
 [ext_resource type="TileSet" uid="uid://bujfttm1tk6pb" path="res://resources/binary_files/ScenaryTileset.tres" id="1_gx4qe"]
 [ext_resource type="PackedScene" uid="uid://c5ttfu25fydqe" path="res://actors/player_character.tscn" id="2_n3fi0"]
 [ext_resource type="Script" uid="uid://ymn503ro32sm" path="res://scripts/body_scripts/PointWay.cs" id="4_xsleb"]
+[ext_resource type="Texture2D" uid="uid://e6vn6yowacch" path="res://assets/sprites/CA_Items.png" id="5_gx4qe"]
 [ext_resource type="Script" uid="uid://cl5comqjs83ki" path="res://scripts/body_scripts/Canteen.cs" id="5_tt0a4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wwxcm"]
 size = Vector2(160, 32)
 
 [node name="Canteen" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -1
@@ -16,7 +18,7 @@ tile_map_data = PackedByteArray("AAD9////AAAKAAIAAAD9//7/AAAKAAIAAAD9//3/AAAKAAI
 tile_set = ExtResource("1_gx4qe")
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("2_n3fi0")]
-position = Vector2(0, -80)
+position = Vector2(0, 32)
 
 [node name="Interactables" type="Node" parent="."]
 
@@ -33,6 +35,7 @@ DestinyPath = "res://scenes/game_scenes/JailRoom.tscn"
 PlayerTargetName = "ToCanteen"
 
 [node name="Canteen" type="Area2D" parent="."]
+y_sort_enabled = true
 position = Vector2(192, -400)
 script = ExtResource("5_tt0a4")
 
@@ -41,16 +44,29 @@ position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_wwxcm")
 debug_color = Color(2.55093e-06, 0.644868, 0.272181, 0.42)
 
-[node name="Slots" type="Node" parent="Canteen"]
+[node name="Slots" type="Node2D" parent="Canteen"]
+y_sort_enabled = true
 
-[node name="ItemSlot1" type="Node2D" parent="Canteen/Slots"]
-position = Vector2(144, -416)
+[node name="ItemSlot1" type="Sprite2D" parent="Canteen/Slots"]
+position = Vector2(-40, -21)
+texture = ExtResource("5_gx4qe")
+hframes = 5
+vframes = 5
+frame = 1
 metadata/slot_id = 1
 
-[node name="ItemSlot2" type="Node2D" parent="Canteen/Slots"]
-position = Vector2(192, -416)
+[node name="ItemSlot2" type="Sprite2D" parent="Canteen/Slots"]
+position = Vector2(0, -21)
+texture = ExtResource("5_gx4qe")
+hframes = 5
+vframes = 5
+frame = 1
 metadata/slot_id = 2
 
-[node name="ItemSlot3" type="Node2D" parent="Canteen/Slots"]
-position = Vector2(240, -416)
+[node name="ItemSlot3" type="Sprite2D" parent="Canteen/Slots"]
+position = Vector2(40, -21)
+texture = ExtResource("5_gx4qe")
+hframes = 5
+vframes = 5
+frame = 1
 metadata/slot_id = 3

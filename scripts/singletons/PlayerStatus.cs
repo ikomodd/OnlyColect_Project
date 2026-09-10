@@ -101,6 +101,8 @@ public partial class PlayerStatus : Node {
 		if (Health < MAX_HEALTH && Hunger > MAX_HUNGER / 2.0f && currentTick - healthBar.LossTick > REGENERATION_DELAY) {
 
 			Health += REGENERATION;
+			Hunger -= 2.0f;
+
 			healthBar.LossTick = currentTick;
 		}
 
